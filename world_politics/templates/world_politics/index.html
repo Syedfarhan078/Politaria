@@ -1,0 +1,283 @@
+{% extends "world_politics/base.html" %}
+{% load static %}
+
+{% block title %}
+Countries - Politaria
+{% endblock %}
+
+{% block content %}
+<!-- Hero Section: Globe + Editorial Header (Split Screen) -->
+<div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 border-b border-slate-200 pb-12 mb-12 relative z-10">
+    
+    <!-- Left: Interactive 3D Political Globe -->
+    <div class="relative shrink-0 w-full lg:w-[480px] flex justify-center items-center">
+        <div class="relative w-full max-w-[460px] aspect-square flex items-center justify-center">
+            <!-- Ambient subtle soft glow -->
+            <div class="absolute inset-4 bg-slate-400/10 rounded-full blur-2xl pointer-events-none"></div>
+            <!-- Globe Canvas Container -->
+            <div 
+                id="globe-container" 
+                class="w-full h-full cursor-grab active:cursor-grabbing relative z-10 flex items-center justify-center overflow-hidden rounded-full"
+                data-geojson-url="{% static 'world_politics/data/countries.geojson' %}"
+            ></div>
+        </div>
+    </div>
+
+    <!-- Right: Editorial Header Text -->
+    <div class="max-w-2xl text-center lg:text-left">
+        <span class="text-[10px] uppercase tracking-[0.25em] font-black text-rose-700 block mb-3">Global Registry</span>
+        <h1 class="text-4xl md:text-6xl font-black text-slate-900 tracking-tight font-serif leading-none mb-4">
+            Political Systems & Leadership
+        </h1>
+        <p class="text-lg md:text-xl font-serif italic text-slate-500 font-light leading-relaxed max-w-xl">
+            An index of sovereign nations mapping historical data, political party structures, leadership directories, and constitutional processes.
+        </p>
+        <div class="mt-6 flex items-center gap-3 justify-center lg:justify-start">
+            <span class="inline-flex items-center gap-1.5 bg-slate-100 border border-slate-200 text-slate-600 text-[9px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full">
+                <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span>
+                {{ countries|length }} Countries Indexed
+            </span>
+        </div>
+    </div>
+</div>
+
+<!-- Search & Filtering Block (Zero Reloads) -->
+<div class="bg-white/80 backdrop-blur-md border border-slate-200/80 rounded-2xl p-5 md:p-6 mb-12 shadow-sm relative z-10 max-w-5xl">
+    <form id="filter-form" onsubmit="event.preventDefault();" class="flex flex-col md:flex-row gap-4">
+        <!-- Search Input -->
+        <div class="flex-1 relative">
+            <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
+                <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                </svg>
+            </div>
+            <input
+                type="search"
+                id="search-input"
+                name="search"
+                placeholder="Search archive by country name..."
+                value="{{ search_query }}"
+                class="w-full pl-11 pr-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-rose-700 focus:border-rose-700 focus:bg-white transition-all text-sm font-medium"
+            >
+        </div>
+
+        <!-- Continent Filter -->
+        <div class="w-full md:w-64 relative">
+            <select 
+                id="continent-select"
+                name="continent"
+                class="w-full pl-4 pr-10 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-800 appearance-none focus:outline-none focus:ring-1 focus:ring-rose-700 focus:border-rose-700 focus:bg-white transition-all text-sm font-medium cursor-pointer"
+            >
+                <option value="">All Continents</option>
+                {% for continent in continents %}
+                    <option
+                        value="{{ continent }}"
+                        {% if continent_filter == continent %}selected{% endif %}
+                    >
+                        {{ continent }}
+                    </option>
+                {% endfor %}
+            </select>
+            <div class="absolute inset-y-0 right-0 pr-4 flex items-center pointer-events-none text-slate-400">
+                <svg class="h-3.5 w-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Filter Actions -->
+        <div class="flex gap-2">
+            <button 
+                type="button"
+                id="clear-filters-btn"
+                class="flex-1 md:flex-initial bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-800 font-bold text-xs uppercase tracking-wider px-8 py-3.5 rounded-xl transition-all flex items-center justify-center hidden"
+                title="Reset Filters"
+            >
+                Clear
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Country Catalog Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+    {% for country in countries %}
+        <article 
+            class="group flex flex-col justify-between bg-white/80 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:border-slate-350 hover:bg-white country-card"
+            data-code-2="{{ country.code_2 }}"
+            data-continent="{{ country.continent }}"
+            data-lat="{{ country.latitude|default:'0' }}"
+            data-lng="{{ country.longitude|default:'0' }}"
+            data-name="{{ country.name }}"
+        >
+            <div>
+                <!-- Card Header -->
+                <div class="flex items-start justify-between border-b border-slate-100 pb-4 mb-4">
+                    <div class="min-w-0 pr-2">
+                        <span class="text-[9px] font-bold text-slate-400 uppercase tracking-widest block mb-1">
+                            {{ country.continent }}
+                        </span>
+                        <h2 class="text-xl font-bold text-slate-900 group-hover:text-rose-700 transition-colors leading-tight font-serif truncate">
+                            {{ country.name }}
+                        </h2>
+                    </div>
+                    {% if country.flag %}
+                        <img
+                            src="{{ country.flag.url }}"
+                            alt="{{ country.name }} flag"
+                            class="w-12 h-8 object-cover rounded shadow-sm border border-slate-200/60 shrink-0 mt-0.5 group-hover:scale-105 transition-transform"
+                        >
+                    {% else %}
+                        <div class="w-12 h-8 bg-slate-50 border border-slate-200 border-dashed rounded flex items-center justify-center text-[7px] text-slate-400 font-bold shrink-0 mt-0.5">
+                            NO FLAG
+                        </div>
+                    {% endif %}
+                </div>
+
+                <!-- Card Details list -->
+                <div class="space-y-2 text-xs text-slate-500 mb-6 font-medium">
+                    <div class="flex justify-between items-center gap-2">
+                        <span class="text-slate-400 text-[10px] uppercase tracking-wide">Capital</span>
+                        <span class="text-slate-800 font-semibold truncate max-w-[130px]">{{ country.capital|default:"N/A" }}</span>
+                    </div>
+                    <div class="flex justify-between items-center gap-2">
+                        <span class="text-slate-400 text-[10px] uppercase tracking-wide">Constitutional Form</span>
+                        <span class="text-slate-800 font-semibold truncate max-w-[150px]" title="{{ country.government_type }}">
+                            {{ country.government_type|default:"N/A" }}
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Action link -->
+            <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                    Archive Code: {{ country.code }}
+                </span>
+                <a
+                    href="{% url 'country_detail' country.id %}"
+                    class="inline-flex items-center gap-1 font-bold text-rose-700 hover:text-rose-900 text-xs uppercase tracking-wider group-hover:translate-x-1.5 transition-transform duration-300"
+                >
+                    Open Profile
+                    <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"/>
+                    </svg>
+                </a>
+            </div>
+        </article>
+    {% empty %}
+        <!-- Server-side Empty State (Only if DB itself has no data) -->
+        <div class="col-span-full bg-white/90 backdrop-blur-md border border-slate-200 border-dashed rounded-2xl p-12 text-center max-w-lg mx-auto">
+            <h3 class="text-lg font-bold text-slate-900 mb-2">Repository is Empty</h3>
+            <p class="text-xs text-slate-500 leading-relaxed font-medium">
+                No country entries exist in the Politaria repository yet.
+            </p>
+        </div>
+    {% endfor %}
+
+    <!-- Client-side Live Filter Empty State (Hidden by default) -->
+    <div id="client-empty-state" class="col-span-full bg-white/90 backdrop-blur-md border border-slate-200 border-dashed rounded-2xl p-12 text-center max-w-lg mx-auto hidden">
+        <div class="w-12 h-12 bg-slate-50 border border-slate-150 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+            </svg>
+        </div>
+        <h3 class="text-lg font-bold text-slate-900 mb-2">No Matching Countries</h3>
+        <p class="text-xs text-slate-500 leading-relaxed mb-6 font-medium">
+            No countries in our repository match your search query or continent filter.
+        </p>
+        <button 
+            type="button"
+            id="reset-filter-btn"
+            class="inline-flex items-center justify-center bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider px-6 py-3 rounded-xl transition-colors"
+        >
+            Reset Search Filters
+        </button>
+    </div>
+</div>
+
+<!-- Safe Django countries database mapping for Interactive Globe -->
+<script id="django-countries-data" type="application/json">
+{
+    {% for country in countries %}
+        "{{ country.code }}": {
+            "id": {{ country.id }},
+            "name": "{{ country.name|escapejs }}",
+            "continent": "{{ country.continent|escapejs }}",
+            "code": "{{ country.code }}",
+            "url": "{% url 'country_detail' country.id %}",
+            "lat": {{ country.latitude|default:"null" }},
+            "lng": {{ country.longitude|default:"null" }}
+        }{% if not forloop.last %},{% endif %}
+    {% endfor %}
+}
+</script>
+
+<!-- Globe.gl library (Local static asset) -->
+<script src="{% static 'world_politics/js/globe.gl.min.js' %}"></script>
+
+<!-- Preloaded World Country Polygons (Instant Zero-Latency Loading) -->
+<script src="{% static 'world_politics/js/countries_data.js' %}"></script>
+
+<!-- Politaria - Interactive 3D Political Globe Engine -->
+<script src="{% static 'world_politics/js/world_globe.js' %}"></script>
+
+<!-- Client-Side Live Filters & Search logic (Zero Page Reloads) (Human Touch) -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const searchInput = document.getElementById('search-input');
+        const continentSelect = document.getElementById('continent-select');
+        const clearBtn = document.getElementById('clear-filters-btn');
+        const resetBtn = document.getElementById('reset-filter-btn');
+        const cards = document.querySelectorAll('.country-card');
+        const clientEmptyState = document.getElementById('client-empty-state');
+
+        function filterCatalog() {
+            const query = searchInput.value.toLowerCase().trim();
+            const selectedContinent = continentSelect.value;
+            let visibleCount = 0;
+
+            // Show or hide clear button
+            if (query || selectedContinent) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+
+            cards.forEach(card => {
+                const countryName = card.querySelector('h2').textContent.toLowerCase();
+                const countryContinent = card.getAttribute('data-continent');
+                
+                const matchesQuery = countryName.includes(query);
+                const matchesContinent = !selectedContinent || countryContinent === selectedContinent;
+
+                if (matchesQuery && matchesContinent) {
+                    card.classList.remove('hidden');
+                    visibleCount++;
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
+
+            // Handle empty states dynamically
+            if (visibleCount === 0) {
+                clientEmptyState.classList.remove('hidden');
+            } else {
+                clientEmptyState.classList.add('hidden');
+            }
+        }
+
+        function resetAllFilters() {
+            searchInput.value = '';
+            continentSelect.value = '';
+            filterCatalog();
+        }
+
+        // Event listeners for real-time filter action
+        searchInput.addEventListener('input', filterCatalog);
+        continentSelect.addEventListener('change', filterCatalog);
+        clearBtn.addEventListener('click', resetAllFilters);
+        resetBtn.addEventListener('click', resetAllFilters);
+    });
+</script>
+{% endblock %}

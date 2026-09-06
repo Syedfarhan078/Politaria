@@ -1,0 +1,153 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}World Politics{% endblock %}</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Inter (Sans) and Playfair Display (Serif for editorial) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;0,900;1,400;1,600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            navy: '#0f172a',      /* slate-900 */
+                            editorial: '#1e293b',  /* slate-800 */
+                            accent: '#be123c',     /* rose-700 for editorial contrast */
+                            accentHover: '#9f1239',/* rose-800 */
+                            accentLight: '#ffe4e6',/* rose-100 */
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style type="text/tailwindcss">
+        @layer base {
+            body {
+                @apply font-sans text-slate-800 antialiased selection:bg-rose-100 selection:text-rose-950;
+            }
+            h1, h2, h3 {
+                @apply font-serif font-semibold tracking-tight text-slate-900;
+            }
+        }
+
+        /* Human Touch drop caps for editorial vibe */
+        .dropcap::first-letter {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            float: left;
+            line-height: 0.85;
+            padding-top: 4px;
+            padding-right: 8px;
+            padding-left: 2px;
+            font-weight: 900;
+            color: #be123c; /* brand-accent */
+        }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen bg-slate-50 relative">
+
+    <!-- Editorial Header / Navbar -->
+    <header class="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/80 backdrop-blur-md supports-[backdrop-filter]:bg-white/85">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex h-20 items-center justify-between">
+                <a href="{% url 'index' %}" class="flex items-center gap-3 hover:opacity-95 transition-opacity">
+                    <!-- Styled Greek Temple / Archive SVG Logo (Human Touch) -->
+                    <svg class="w-8 h-8 text-rose-700 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Pediment/Roof -->
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-6 9 6" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2 9h20" />
+                        <!-- Pillars -->
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 9v9" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 9v9" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14 9v9" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M18 9v9" />
+                        <!-- Base Steps -->
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 18h16" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2 21h20" />
+                    </svg>
+                    <div class="flex flex-col">
+                        <span class="font-serif text-2xl md:text-3xl font-black tracking-tight text-slate-900 leading-none">POLITARIA</span>
+                        <span class="text-[9px] uppercase tracking-[0.18em] font-bold text-slate-500 mt-1">A collection, archive, or systematic repository of political, civic, or institutional data.</span>
+                    </div>
+                </a>
+                <nav class="flex items-center gap-6">
+                    <a href="{% url 'index' %}" class="text-xs uppercase tracking-widest font-bold text-slate-600 hover:text-rose-700 py-1 transition-colors border-b border-transparent hover:border-rose-700">
+                        Countries
+                    </a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- Editorial Footer -->
+    <footer class="w-full bg-slate-950 text-slate-400 py-16 border-t border-slate-900 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 border-b border-slate-900 pb-12 mb-12">
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3 text-white">
+                        <!-- Styled Greek Temple / Archive SVG Logo (Human Touch) -->
+                        <svg class="w-6 h-6 text-rose-500 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Pediment/Roof -->
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-6 9 6" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2 9h20" />
+                            <!-- Pillars -->
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 9v9" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10 9v9" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M14 9v9" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M18 9v9" />
+                            <!-- Base Steps -->
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 18h16" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2 21h20" />
+                        </svg>
+                        <span class="font-serif text-xl font-black tracking-wider">POLITARIA</span>
+                    </div>
+                    <p class="text-sm max-w-md font-light leading-relaxed text-slate-400">
+                        A collection, archive, or systematic repository of political, civic, or institutional data.
+                    </p>
+                </div>
+                <div class="md:text-right flex flex-col justify-end space-y-2 text-xs">
+                    <span class="text-rose-400 font-bold uppercase tracking-wider">Archives curated independently</span>
+                    <span class="text-slate-400">Built using verified constitutional, electoral, and historical documents.</span>
+                </div>
+            </div>
+            
+            <!-- Disclaimer Section (Human Touch) -->
+            <div class="border-b border-slate-900 pb-8 mb-8 text-[11px] text-slate-400 leading-relaxed max-w-5xl font-light">
+                <span class="font-semibold text-rose-400 uppercase tracking-wider block mb-1.5 text-[10px]">Disclaimer & Representational Use</span>
+                All maps, boundary outlines, legislative datasets, and political leader biographies contained in this archive are compiled exclusively for educational, research, and representational purposes. The depiction of geographical boundaries, country outlines, and titles does not imply the expression of any political opinion or territorial validation by the authors. The information is curated to reflect public archives and is not intended to offend, hurt national sentiments, or validate territorial claims.
+            </div>
+
+            <div class="flex flex-col sm:flex-row items-center justify-between text-xs text-slate-500 gap-4">
+                <p>&copy; {% now "Y" %} Politaria. All rights reserved.</p>
+                <div class="flex gap-4">
+                    <span class="text-slate-500">Independent Research & Analysis Project</span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>

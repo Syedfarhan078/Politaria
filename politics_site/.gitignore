@@ -1,0 +1,8 @@
+# vitual Environemnt
+
+.venv/
+
+# environment variables / secret keys
+
+.env
+.env.*
