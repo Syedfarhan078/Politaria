@@ -190,7 +190,7 @@
         const controls = globe.controls();
         if (controls) {
             controls.autoRotate = false;
-            controls.enableZoom = true;
+            controls.enableZoom = window.innerWidth >= 768; // Smooth desktop zoom, zero touch trapping on mobile
             controls.minDistance = 120;
             controls.maxDistance = 450;
         }

@@ -66,10 +66,10 @@
     <!-- Editorial Header / Navbar -->
     <header class="sticky top-0 z-50 w-full border-b border-slate-200/80 bg-white/80 backdrop-blur-md supports-[backdrop-filter]:bg-white/85">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex h-20 items-center justify-between">
-                <a href="{% url 'index' %}" class="flex items-center gap-3 hover:opacity-95 transition-opacity">
+            <div class="flex h-16 sm:h-20 items-center justify-between">
+                <a href="{% url 'index' %}" class="flex items-center gap-2.5 sm:gap-3 hover:opacity-95 transition-opacity min-w-0">
                     <!-- Styled Greek Temple / Archive SVG Logo (Human Touch) -->
-                    <svg class="w-8 h-8 text-rose-700 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <svg class="w-7 h-7 sm:w-8 sm:h-8 text-rose-700 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                         <!-- Pediment/Roof -->
                         <path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-6 9 6" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2 9h20" />
@@ -82,12 +82,12 @@
                         <path stroke-linecap="round" stroke-linejoin="round" d="M4 18h16" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="M2 21h20" />
                     </svg>
-                    <div class="flex flex-col">
-                        <span class="font-serif text-2xl md:text-3xl font-black tracking-tight text-slate-900 leading-none">POLITARIA</span>
-                        <span class="text-[9px] uppercase tracking-[0.18em] font-bold text-slate-500 mt-1">A collection, archive, or systematic repository of political, civic, or institutional data.</span>
+                    <div class="flex flex-col min-w-0">
+                        <span class="font-serif text-xl sm:text-2xl md:text-3xl font-black tracking-tight text-slate-900 leading-none">POLITARIA</span>
+                        <span class="text-[9px] uppercase tracking-[0.18em] font-bold text-slate-500 mt-1 hidden sm:block truncate">A collection, archive, or systematic repository of political, civic, or institutional data.</span>
                     </div>
                 </a>
-                <nav class="flex items-center gap-6">
+                <nav class="flex items-center gap-4 sm:gap-6 shrink-0">
                     <a href="{% url 'index' %}" class="text-xs uppercase tracking-widest font-bold text-slate-600 hover:text-rose-700 py-1 transition-colors border-b border-transparent hover:border-rose-700">
                         Countries
                     </a>
@@ -97,7 +97,7 @@
     </header>
 
     <!-- Main Content Grid -->
-    <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 relative">
+    <main class="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-10 relative">
         {% block content %}
         {% endblock %}
     </main>

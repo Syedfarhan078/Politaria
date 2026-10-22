@@ -7,32 +7,32 @@ Countries - Politaria
 
 {% block content %}
 <!-- Hero Section: Globe + Editorial Header (Split Screen) -->
-<div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-16 border-b border-slate-200 pb-12 mb-12 relative z-10">
+<div class="flex flex-col-reverse lg:flex-row items-center gap-8 lg:gap-16 border-b border-slate-200 pb-8 sm:pb-12 mb-8 sm:mb-12 relative z-10">
     
-    <!-- Left: Interactive 3D Political Globe -->
+    <!-- Left / Bottom on mobile: Interactive 3D Political Globe -->
     <div class="relative shrink-0 w-full lg:w-[480px] flex justify-center items-center">
-        <div class="relative w-full max-w-[460px] aspect-square flex items-center justify-center">
+        <div class="relative w-[280px] h-[280px] sm:w-[380px] sm:h-[380px] lg:w-[460px] lg:h-[460px] flex items-center justify-center mx-auto">
             <!-- Ambient subtle soft glow -->
             <div class="absolute inset-4 bg-slate-400/10 rounded-full blur-2xl pointer-events-none"></div>
             <!-- Globe Canvas Container -->
             <div 
                 id="globe-container" 
-                class="w-full h-full cursor-grab active:cursor-grabbing relative z-10 flex items-center justify-center overflow-hidden rounded-full"
+                class="w-full h-full cursor-grab active:cursor-grabbing relative z-10 flex items-center justify-center overflow-hidden rounded-full shadow-inner"
                 data-geojson-url="{% static 'world_politics/data/countries.geojson' %}"
             ></div>
         </div>
     </div>
 
-    <!-- Right: Editorial Header Text -->
+    <!-- Right / Top on mobile: Editorial Header Text -->
     <div class="max-w-2xl text-center lg:text-left">
-        <span class="text-[10px] uppercase tracking-[0.25em] font-black text-rose-700 block mb-3">Global Registry</span>
-        <h1 class="text-4xl md:text-6xl font-black text-slate-900 tracking-tight font-serif leading-none mb-4">
+        <span class="text-[10px] uppercase tracking-[0.25em] font-black text-rose-700 block mb-2 sm:mb-3">Global Registry</span>
+        <h1 class="text-3xl sm:text-5xl md:text-6xl font-black text-slate-900 tracking-tight font-serif leading-tight sm:leading-none mb-3 sm:mb-4">
             Political Systems & Leadership
         </h1>
-        <p class="text-lg md:text-xl font-serif italic text-slate-500 font-light leading-relaxed max-w-xl">
+        <p class="text-base sm:text-lg md:text-xl font-serif italic text-slate-500 font-light leading-relaxed max-w-xl mx-auto lg:mx-0">
             An index of sovereign nations mapping historical data, political party structures, leadership directories, and constitutional processes.
         </p>
-        <div class="mt-6 flex items-center gap-3 justify-center lg:justify-start">
+        <div class="mt-5 sm:mt-6 flex items-center gap-3 justify-center lg:justify-start">
             <span class="inline-flex items-center gap-1.5 bg-slate-100 border border-slate-200 text-slate-600 text-[9px] font-bold uppercase tracking-wider px-3 py-1.5 rounded-full">
                 <span class="w-1.5 h-1.5 rounded-full bg-rose-500 animate-pulse"></span>
                 {{ countries|length }} Countries Indexed
@@ -42,8 +42,8 @@ Countries - Politaria
 </div>
 
 <!-- Search & Filtering Block (Zero Reloads) -->
-<div class="bg-white/80 backdrop-blur-md border border-slate-200/80 rounded-2xl p-5 md:p-6 mb-12 shadow-sm relative z-10 max-w-5xl">
-    <form id="filter-form" onsubmit="event.preventDefault();" class="flex flex-col md:flex-row gap-4">
+<div class="bg-white/80 backdrop-blur-md border border-slate-200/80 rounded-2xl p-4 sm:p-6 mb-8 sm:mb-12 shadow-sm relative z-10 max-w-5xl">
+    <form id="filter-form" onsubmit="event.preventDefault();" class="flex flex-col md:flex-row gap-3 sm:gap-4">
         <!-- Search Input -->
         <div class="flex-1 relative">
             <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400">
@@ -57,7 +57,7 @@ Countries - Politaria
                 name="search"
                 placeholder="Search archive by country name..."
                 value="{{ search_query }}"
-                class="w-full pl-11 pr-4 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-rose-700 focus:border-rose-700 focus:bg-white transition-all text-sm font-medium"
+                class="w-full pl-11 pr-4 py-3 sm:py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-800 placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-rose-700 focus:border-rose-700 focus:bg-white transition-all text-base sm:text-sm font-medium"
             >
         </div>
 
@@ -66,7 +66,7 @@ Countries - Politaria
             <select 
                 id="continent-select"
                 name="continent"
-                class="w-full pl-4 pr-10 py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-800 appearance-none focus:outline-none focus:ring-1 focus:ring-rose-700 focus:border-rose-700 focus:bg-white transition-all text-sm font-medium cursor-pointer"
+                class="w-full pl-4 pr-10 py-3 sm:py-3.5 rounded-xl border border-slate-200 bg-slate-50/50 text-slate-800 appearance-none focus:outline-none focus:ring-1 focus:ring-rose-700 focus:border-rose-700 focus:bg-white transition-all text-base sm:text-sm font-medium cursor-pointer"
             >
                 <option value="">All Continents</option>
                 {% for continent in continents %}
@@ -90,7 +90,7 @@ Countries - Politaria
             <button 
                 type="button"
                 id="clear-filters-btn"
-                class="flex-1 md:flex-initial bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-800 font-bold text-xs uppercase tracking-wider px-8 py-3.5 rounded-xl transition-all flex items-center justify-center hidden"
+                class="flex-1 md:flex-initial bg-slate-100 hover:bg-slate-200 text-slate-600 hover:text-slate-800 font-bold text-xs uppercase tracking-wider px-6 sm:px-8 py-3 sm:py-3.5 rounded-xl transition-all flex items-center justify-center hidden"
                 title="Reset Filters"
             >
                 Clear
@@ -100,10 +100,10 @@ Countries - Politaria
 </div>
 
 <!-- Country Catalog Grid -->
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 relative z-10">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-8 relative z-10">
     {% for country in countries %}
         <article 
-            class="group flex flex-col justify-between bg-white/80 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-6 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:border-slate-350 hover:bg-white country-card"
+            class="group flex flex-col justify-between bg-white/80 backdrop-blur-sm border border-slate-200/80 rounded-2xl p-5 sm:p-6 transition-all duration-300 hover:-translate-y-1.5 hover:shadow-lg hover:border-slate-350 hover:bg-white country-card"
             data-code-2="{{ country.code_2 }}"
             data-continent="{{ country.continent }}"
             data-lat="{{ country.latitude|default:'0' }}"

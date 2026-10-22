@@ -57,10 +57,10 @@
             return countryLookup[iso] || countryLookup[adm] || countryLookup[su] || countryLookup[name] || null;
         }
 
-        // 2. Container sizing
+        // 2. Container sizing (Responsive square on all viewports)
         const getContainerDimensions = () => {
-            const width = container.clientWidth || 450;
-            const height = Math.min(Math.max(width, 360), 460);
+            const width = container.clientWidth || 300;
+            const height = container.clientHeight || width;
             return { width, height };
         };
 
@@ -180,7 +180,7 @@
         if (controls) {
             controls.autoRotate = true;
             controls.autoRotateSpeed = 0.5;
-            controls.enableZoom = true;
+            controls.enableZoom = window.innerWidth >= 768; // Smooth desktop zoom, zero touch trapping on mobile
             controls.minDistance = 150;
             controls.maxDistance = 500;
         }
