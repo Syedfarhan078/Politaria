@@ -149,5 +149,167 @@
         </div>
     </footer>
 
+    <!-- Politaria Top Slim Progress Bar (YouTube/GitHub Style) -->
+    <div id="politaria-progress-bar" class="fixed top-0 left-0 h-1 bg-gradient-to-r from-rose-600 via-rose-500 to-amber-500 z-[9999] transition-all duration-300 ease-out w-0 pointer-events-none shadow-[0_0_12px_rgba(190,18,60,0.8)]"></div>
+
+    <!-- Politaria Archival Telemetry & Trivia Loading Overlay -->
+    <div id="politaria-loader" class="fixed inset-0 z-[9998] bg-slate-950/75 backdrop-blur-md flex items-center justify-center p-4 transition-opacity duration-300 opacity-0 pointer-events-none">
+        <div class="max-w-md w-full bg-slate-900/95 border border-slate-800 rounded-3xl p-6 sm:p-8 text-center shadow-2xl relative overflow-hidden transform transition-all duration-300 scale-95" id="politaria-loader-card">
+            <!-- Subtle glowing ambient gradient blobs -->
+            <div class="absolute -top-12 -left-12 w-40 h-40 bg-rose-600/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -bottom-12 -right-12 w-40 h-40 bg-teal-600/20 rounded-full blur-3xl pointer-events-none"></div>
+
+            <!-- Animated Geopolitical Radar / Temple Seal -->
+            <div class="relative w-20 h-20 mx-auto mb-5 flex items-center justify-center">
+                <!-- Outer rotating dashed radar ring -->
+                <div class="absolute inset-0 rounded-full border-2 border-dashed border-rose-500/40 animate-[spin_8s_linear_infinite]"></div>
+                <!-- Inner pulsing ping ring -->
+                <div class="absolute inset-2 rounded-full border border-teal-500/50 animate-ping opacity-25"></div>
+                <!-- Center Temple Icon -->
+                <svg class="w-8 h-8 text-rose-500 relative z-10 animate-pulse" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-6 9 6" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2 9h20" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 9v9" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 9v9" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 9v9" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M18 9v9" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 18h16" />
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M2 21h20" />
+                </svg>
+            </div>
+
+            <!-- Archival Telemetry Ticker -->
+            <div class="flex items-center justify-center gap-2 mb-2">
+                <span class="w-2 h-2 rounded-full bg-rose-500 animate-ping"></span>
+                <span class="text-[10px] uppercase tracking-[0.22em] font-mono font-bold text-rose-400">Archival Stream Active</span>
+            </div>
+
+            <!-- Status Headline -->
+            <h3 id="loader-status" class="text-lg sm:text-xl font-serif font-black text-white mb-4 tracking-tight">
+                Accessing Sovereign Records...
+            </h3>
+
+            <!-- Dynamic Trivia Box (Engages the user while navigating) -->
+            <div class="p-4 bg-slate-950/70 border border-slate-800/80 rounded-2xl text-left">
+                <div class="flex items-center gap-1.5 text-[9px] uppercase tracking-wider font-bold text-amber-400 mb-1.5">
+                    <span>✦</span> Constitutional & Political Briefing
+                </div>
+                <p id="loader-trivia" class="text-xs text-slate-300 font-serif italic leading-relaxed min-h-[44px]">
+                    "San Marino possesses the world's oldest surviving sovereign constitution, written in 1600."
+                </p>
+            </div>
+
+            <!-- Progress animation track -->
+            <div class="w-full bg-slate-800/80 h-1 rounded-full overflow-hidden mt-5">
+                <div class="h-full bg-gradient-to-r from-rose-600 via-rose-500 to-teal-400 w-1/3 rounded-full animate-[pulse_1.2s_ease-in-out_infinite]"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Interactive Navigation Interceptor Script -->
+    <script>
+        (function() {
+            const TRIVIA_LIST = [
+                "San Marino possesses the world's oldest surviving sovereign constitution, written in 1600.",
+                "Iceland's Althing, established in 930 AD, is recognized as the world's oldest surviving parliament.",
+                "Bhutan is the only sovereign nation on Earth that measures national progress by Gross National Happiness (GNH) rather than GDP.",
+                "Nauru is the only sovereign republic in the world without an official designated capital city.",
+                "The Isle of Man was the first jurisdiction to grant women the right to vote in national parliamentary elections (1881).",
+                "Switzerland operates under a collective 7-member Federal Council acting together as a joint Head of State.",
+                "India possesses the longest written national constitution of any sovereign nation, containing over 146,000 words.",
+                "Vatican City is the world's smallest sovereign state, governed by an elective absolute monarchy.",
+                "Costa Rica constitutionally abolished its standing armed forces in 1948, permanently investing the defense budget in education.",
+                "Tuvalu generates a notable portion of its national revenue by licensing its '.tv' country-code top-level domain.",
+                "Palestine houses some of the world's oldest uninterrupted municipal governance records and cultural archives.",
+                "The United Kingdom does not have a single codified constitutional document, relying on statutory conventions and historic statutes."
+            ];
+
+            const progressBar = document.getElementById('politaria-progress-bar');
+            const loader = document.getElementById('politaria-loader');
+            const loaderCard = document.getElementById('politaria-loader-card');
+            const triviaEl = document.getElementById('loader-trivia');
+            let triviaInterval = null;
+
+            function showLoader() {
+                // Select random trivia
+                const randomFact = TRIVIA_LIST[Math.floor(Math.random() * TRIVIA_LIST.length)];
+                if (triviaEl) triviaEl.textContent = `"${randomFact}"`;
+
+                // Rotate trivia every 3.5 seconds if waiting longer
+                clearInterval(triviaInterval);
+                triviaInterval = setInterval(() => {
+                    if (triviaEl) {
+                        triviaEl.style.opacity = '0';
+                        setTimeout(() => {
+                            triviaEl.textContent = `"${TRIVIA_LIST[Math.floor(Math.random() * TRIVIA_LIST.length)]}"`;
+                            triviaEl.style.opacity = '1';
+                        }, 200);
+                    }
+                }, 3500);
+
+                // Top progress bar
+                if (progressBar) {
+                    progressBar.style.width = '30%';
+                    setTimeout(() => { progressBar.style.width = '75%'; }, 250);
+                    setTimeout(() => { progressBar.style.width = '90%'; }, 1200);
+                }
+
+                // Show full-screen blur transition overlay
+                if (loader) {
+                    loader.classList.remove('opacity-0', 'pointer-events-none');
+                    loader.classList.add('opacity-100');
+                }
+                if (loaderCard) {
+                    loaderCard.classList.remove('scale-95');
+                    loaderCard.classList.add('scale-100');
+                }
+            }
+
+            function hideLoader() {
+                clearInterval(triviaInterval);
+                if (progressBar) {
+                    progressBar.style.width = '100%';
+                    setTimeout(() => {
+                        progressBar.style.width = '0%';
+                    }, 400);
+                }
+                if (loader) {
+                    loader.classList.remove('opacity-100');
+                    loader.classList.add('opacity-0', 'pointer-events-none');
+                }
+                if (loaderCard) {
+                    loaderCard.classList.remove('scale-100');
+                    loaderCard.classList.add('scale-95');
+                }
+            }
+
+            // Intercept internal page navigation clicks
+            document.addEventListener('click', function(e) {
+                const link = e.target.closest('a');
+                if (!link) return;
+
+                const href = link.getAttribute('href');
+                const target = link.getAttribute('target');
+
+                // Skip hash anchors, external links, javascript:, or new tab clicks
+                if (!href || href.startsWith('#') || href.startsWith('javascript:') || target === '_blank') return;
+                if (e.ctrlKey || e.metaKey || e.shiftKey || e.altKey) return;
+
+                // Trigger loading transition immediately!
+                showLoader();
+
+                // Safety fallback timeout: Hide if navigation is aborted after 8 seconds
+                setTimeout(hideLoader, 8000);
+            });
+
+            // Reset loader if page is shown from bfcache (browser back/forward button)
+            window.addEventListener('pageshow', function() {
+                hideLoader();
+            });
+
+            // Expose globally for globe polygon click navigation
+            window.triggerPolitariaLoader = showLoader;
+        })();
+    </script>
 </body>
 </html>

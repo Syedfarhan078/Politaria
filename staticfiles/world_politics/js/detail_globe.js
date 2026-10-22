@@ -163,6 +163,7 @@
             // Click to switch country
             .onPolygonClick(feature => {
                 if (!feature || !feature.__dbInfo || !feature.__dbInfo.url || feature.__isCurrent) return;
+                if (window.triggerPolitariaLoader) window.triggerPolitariaLoader();
                 window.location.href = feature.__dbInfo.url;
             });
 

@@ -152,6 +152,7 @@
             // Click routing to Django country_detail URL
             .onPolygonClick(feature => {
                 if (!feature || !feature.__dbInfo || !feature.__dbInfo.url) return;
+                if (window.triggerPolitariaLoader) window.triggerPolitariaLoader();
                 window.location.href = feature.__dbInfo.url;
             });
 
