@@ -1,8 +1,10 @@
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Prefetch
+from django.views.decorators.cache import cache_control
 from .models import Country, PoliticalLeader, Election, ElectionResult
 
 
+@cache_control(public=True, max_age=300, s_maxage=3600)
 def index(request):
     search_query = request.GET.get("search", "")
     continent_filter = request.GET.get("continent", "")
@@ -38,6 +40,7 @@ def index(request):
     )
 
 
+@cache_control(public=True, max_age=300, s_maxage=3600)
 def country_detail(request, country_id):
     country = get_object_or_404(
         Country.objects
