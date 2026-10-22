@@ -125,6 +125,8 @@ Countries - Politaria
                         <img
                             src="{{ country.flag.url }}"
                             alt="{{ country.name }} flag"
+                            loading="lazy"
+                            decoding="async"
                             class="w-12 h-8 object-cover rounded shadow-sm border border-slate-200/60 shrink-0 mt-0.5 group-hover:scale-105 transition-transform"
                         >
                     {% else %}

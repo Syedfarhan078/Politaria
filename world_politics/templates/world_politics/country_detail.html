@@ -48,6 +48,8 @@
                 <img
                     src="{{ country.flag.url }}"
                     alt="{{ country.name }} flag"
+                    loading="lazy"
+                    decoding="async"
                     class="w-24 h-16 sm:w-32 sm:h-20 object-cover rounded-xl border border-slate-200/40"
                 >
             </div>
@@ -156,6 +158,8 @@
                                     <img
                                         src="{{ leader.photo.url }}"
                                         alt="{{ leader.name }}"
+                                        loading="lazy"
+                                        decoding="async"
                                         class="w-14 h-14 object-cover rounded-full border border-slate-200 shadow-sm shrink-0"
                                     >
                                 {% else %}
@@ -241,6 +245,8 @@
                                     <img
                                         src="{{ party.logo.url }}"
                                         alt="{{ party.name }} logo"
+                                        loading="lazy"
+                                        decoding="async"
                                         class="w-12 h-12 object-contain rounded-xl border border-slate-200/60 p-0.5 bg-white shrink-0 shadow-sm"
                                     >
                                 {% else %}
@@ -374,6 +380,8 @@
                                                             <img
                                                                 src="{{ result.party.logo.url }}"
                                                                 alt="{{ result.party.name }} logo"
+                                                                loading="lazy"
+                                                                decoding="async"
                                                                 class="w-8 h-8 object-contain rounded-lg border border-slate-200/70 p-0.5 bg-white shrink-0"
                                                             >
                                                         {% else %}
