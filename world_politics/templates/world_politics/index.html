@@ -205,7 +205,7 @@ Countries - Politaria
             "name": "{{ country.name|escapejs }}",
             "continent": "{{ country.continent|escapejs }}",
             "code": "{{ country.code }}",
-            "url": "{% url 'country_detail' country.id %}",
+            "url": "/country/{{ country.id }}/",
             "lat": {{ country.latitude|default:"null" }},
             "lng": {{ country.longitude|default:"null" }}
         }{% if not forloop.last %},{% endif %}

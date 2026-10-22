@@ -1014,7 +1014,7 @@
             "name": "{{ c.name|escapejs }}",
             "continent": "{{ c.continent|escapejs }}",
             "code": "{{ c.code }}",
-            "url": "{% url 'country_detail' c.id %}",
+            "url": "/country/{{ c.id }}/",
             "lat": {{ c.latitude|default:"null" }},
             "lng": {{ c.longitude|default:"null" }}
         }{% if not forloop.last %},{% endif %}
