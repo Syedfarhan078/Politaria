@@ -13,12 +13,11 @@ ENV/
 .env
 .env.*
 
-# Django
+# Database & Dumps
 db.sqlite3
 db.sqlite3-journal
-
-# Django collected static files
-staticfiles/
+datadump.json
+*.json.bak
 
 # IDE
 .vscode/
@@ -35,7 +34,3 @@ htmlcov/
 
 # Logs
 *.log
-
-
-# data json
-datadump.json
