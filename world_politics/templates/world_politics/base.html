@@ -6,6 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}World Politics{% endblock %}</title>
     
+    <!-- Favicon & Touch Icons -->
+    <link rel="icon" type="image/x-icon" href="{% static 'world_politics/images/favicon.ico' %}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'world_politics/images/favicon.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'world_politics/images/favicon.png' %}">
+    
     <!-- DNS prefetch & preconnect for lightning-fast asset handshakes -->
     <link rel="dns-prefetch" href="//cdn.tailwindcss.com">
     <link rel="preconnect" href="https://cdn.tailwindcss.com" crossorigin>
@@ -74,20 +79,8 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex h-16 sm:h-20 items-center justify-between">
                 <a href="{% url 'index' %}" class="flex items-center gap-2.5 sm:gap-3 hover:opacity-95 transition-opacity min-w-0">
-                    <!-- Styled Greek Temple / Archive SVG Logo (Human Touch) -->
-                    <svg class="w-7 h-7 sm:w-8 sm:h-8 text-rose-700 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <!-- Pediment/Roof -->
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-6 9 6" />
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2 9h20" />
-                        <!-- Pillars -->
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 9v9" />
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 9v9" />
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M14 9v9" />
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M18 9v9" />
-                        <!-- Base Steps -->
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M4 18h16" />
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M2 21h20" />
-                    </svg>
+                    <!-- Politaria Official Logo -->
+                    <img src="{% static 'world_politics/images/logo.png' %}" alt="Politaria Logo" class="w-8 h-8 sm:w-10 sm:h-10 object-contain shrink-0 rounded-full">
                     <div class="flex flex-col min-w-0">
                         <span class="font-serif text-xl sm:text-2xl md:text-3xl font-black tracking-tight text-slate-900 leading-none">POLITARIA</span>
                         <span class="text-[9px] uppercase tracking-[0.18em] font-bold text-slate-500 mt-1 hidden sm:block truncate">A collection, archive, or systematic repository of political, civic, or institutional data.</span>
@@ -114,20 +107,8 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-12 border-b border-slate-900 pb-12 mb-12">
                 <div class="space-y-4">
                     <div class="flex items-center gap-3 text-white">
-                        <!-- Styled Greek Temple / Archive SVG Logo (Human Touch) -->
-                        <svg class="w-6 h-6 text-rose-500 shrink-0" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                            <!-- Pediment/Roof -->
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-6 9 6" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2 9h20" />
-                            <!-- Pillars -->
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 9v9" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M10 9v9" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M14 9v9" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M18 9v9" />
-                            <!-- Base Steps -->
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M4 18h16" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M2 21h20" />
-                        </svg>
+                        <!-- Politaria Official Logo -->
+                        <img src="{% static 'world_politics/images/logo.png' %}" alt="Politaria Logo" class="w-8 h-8 object-contain shrink-0 rounded-full bg-white p-0.5 shadow-sm">
                         <span class="font-serif text-xl font-black tracking-wider">POLITARIA</span>
                     </div>
                     <p class="text-sm max-w-md font-light leading-relaxed text-slate-400">
@@ -171,17 +152,8 @@
                 <div class="absolute inset-0 rounded-full border-2 border-dashed border-rose-500/40 animate-[spin_8s_linear_infinite]"></div>
                 <!-- Inner pulsing ping ring -->
                 <div class="absolute inset-2 rounded-full border border-teal-500/50 animate-ping opacity-25"></div>
-                <!-- Center Temple Icon -->
-                <svg class="w-8 h-8 text-rose-500 relative z-10 animate-pulse" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3 9l9-6 9 6" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M2 9h20" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M6 9v9" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M10 9v9" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M14 9v9" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M18 9v9" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 18h16" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M2 21h20" />
-                </svg>
+                <!-- Center Logo -->
+                <img src="{% static 'world_politics/images/logo.png' %}" alt="Politaria Logo" class="w-10 h-10 object-contain relative z-10 rounded-full bg-white p-0.5 shadow-sm animate-pulse">
             </div>
 
             <!-- Archival Telemetry Ticker -->
