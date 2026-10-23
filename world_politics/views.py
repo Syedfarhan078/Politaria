@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.db.models import Prefetch
 from django.views.decorators.cache import cache_control
@@ -83,4 +84,32 @@ def country_detail(request, country_id):
         request,
         "world_politics/country_detail.html",
         context
+    )
+
+
+@cache_control(public=True, max_age=86400, s_maxage=86400)
+def robots_txt(request):
+    host = request.get_host()
+    lines = [
+        "User-agent: *",
+        "Disallow: /projectadmin/",
+        "Allow: /",
+        "",
+        f"Sitemap: https://{host}/sitemap.xml",
+    ]
+    return HttpResponse("\n".join(lines), content_type="text/plain; charset=utf-8")
+
+
+@cache_control(public=True, max_age=86400, s_maxage=86400)
+def sitemap_xml(request):
+    base_url = f"https://{request.get_host()}"
+    countries = Country.objects.only("id").order_by("id")
+    return render(
+        request,
+        "world_politics/sitemap.xml",
+        {
+            "base_url": base_url,
+            "countries": countries,
+        },
+        content_type="application/xml; charset=utf-8",
     )
