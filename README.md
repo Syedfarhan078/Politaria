@@ -119,10 +119,7 @@ Politics/
 4. **Configure Environment Variables (`.env`):**
    Create a `.env` file in the project root:
    ```env
-   DEBUG=True
-   SECRET_KEY=your-django-secret-key-here
-   DATABASE_URL=postgresql://user:password@localhost:5432/politaria
-   ```
+
 
 5. **Run Migrations & Collect Static Files:**
    ```bash
